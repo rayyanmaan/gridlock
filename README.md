@@ -35,25 +35,27 @@ One metric wins, decisively, in both cities tested.
 
 <br>
 
-## 📊 The headline result
+## The headline result
 
-**Edge betweenness centrality** — the fraction of all shortest paths in the network that run through a given street — predicts simulated congestion with a Spearman rank correlation of **ρ = 0.80** in Berlin and **ρ = 0.84** in Buenos Aires. It beats every rival metric by a wide margin, and the full ranking is *identical* across two cities with completely different street layouts.
+**Edge betweenness centrality** — the fraction of all shortest paths in the network that run through a given street — predicts simulated congestion with a Spearman rank correlation of **ρ = 0.80** in Berlin and **ρ = 0.84** in Buenos Aires. It beats every rival metric by a wide margin in both cities, and by a margin far larger than the gap between any other pair of metrics.
 
-| Structural metric | 🇩🇪 Berlin ρ | 🇦🇷 Buenos Aires ρ | Verdict |
+| Structural metric | Berlin ρ | Buenos Aires ρ | Verdict |
 |---|:---:|:---:|---|
-| **Edge betweenness centrality** | **0.801** | **0.838** | 🥇 dominant in both |
-| Mean endpoint betweenness | 0.667 | 0.617 | 🥈 a proxy for the above |
-| Mean endpoint closeness | 0.364 | — | moderate |
-| Segment length | 0.270 | 0.059 *(n.s.)* | city-dependent |
-| Mean endpoint degree | 0.196 | — | 🥉 weakest |
+| **Edge betweenness centrality** | **0.80** | **0.84** | dominant in both |
+| Mean endpoint betweenness | 0.67 | 0.54 | runner-up in both — a proxy for the above |
+| Mean endpoint closeness | 0.36 | 0.16 | weak, and much weaker in Buenos Aires |
+| Segment length | 0.27 | 0.06 *(n.s.)* | matters in Berlin, vanishes in Buenos Aires |
+| Mean endpoint degree | 0.20 | 0.21 | consistently weak in both |
 
-<sub>Spearman rank correlation against mean congestion over 100 independent trials per city. All values except Buenos Aires segment length significant at p &lt; 0.0001.</sub>
+<sub>Spearman rank correlation against mean congestion over 100 independent trials per city, quoted to the precision shown in the published figure. All values except Buenos Aires segment length (p = 0.15) significant at p &lt; 0.0001.</sub>
+
+Note what is and isn't stable across the two cities. **The top two places are identical**, and the winner's margin is enormous in both. **The bottom three reshuffle** — closeness and segment length collapse in Buenos Aires while degree holds steady — which is a finding in its own right: the weak predictors are weak in *city-specific* ways, while the strong one is strong regardless of urban form.
 
 **Why it works, in one line:** every car takes a shortest path, so a street sitting on many shortest paths collects traffic from many origin–destination pairs no matter which pairs get sampled — which is the literal definition of betweenness centrality.
 
 <br>
 
-## ⚡ Quickstart
+## Quickstart
 
 ```bash
 git clone https://github.com/rayyanmaan/gridlock.git
@@ -80,7 +82,7 @@ python -m gridlock --city berlin --trials 3 --radius 400 --skip-sweep
 ```
 
 <details>
-<summary><b>🐍 Or use it as a library (six lines to a congestion map)</b></summary>
+<summary><b>Or use it as a library (six lines to a congestion map)</b></summary>
 
 <br>
 
@@ -111,7 +113,7 @@ print(compute_metric_correlations(table))
 </details>
 
 <details>
-<summary><b>📓 Or just read the notebook</b></summary>
+<summary><b>Or just read the notebook</b></summary>
 
 <br>
 
@@ -123,7 +125,7 @@ It runs top to bottom with no manual intervention. A complete run takes roughly 
 
 <br>
 
-## 🔬 How it works
+## How it works
 
 <details open>
 <summary><b>1 · Roads become cellular automata</b></summary>
@@ -212,7 +214,7 @@ The distribution is sharply **right-skewed**: most streets carry almost nothing 
 
 <br>
 
-## 🗺️ Two cities, one answer
+## Two cities, one answer
 
 The whole point of testing a second city is that it was chosen to be *as unlike the first as possible*. Berlin's Kreuzberg is a dense, irregular inner-city grid. The Obelisco in Buenos Aires is a radial, arterial-dominated network built around one of the widest avenues on Earth. Every parameter was held identical.
 
@@ -242,13 +244,15 @@ The whole point of testing a second city is that it was chosen to be *as unlike 
 <div align="center">
 <img src="report/figures/13-correlation-comparison.png" width="760" alt="Metric correlations compared across both cities">
 
-*Same winner. Same runner-up. Same ranking, all the way down.*
+*Same winner. Same runner-up. Same enormous gap between them and everything else.*
 </div>
 
-That consistency is the real finding. It means the betweenness–congestion relationship isn't a quirk of Berlin's layout — it's a structural property of shortest-path routing that survives a change of continent, of century, and of urban planning philosophy.
+That top-two stability is the real finding. It means the betweenness–congestion relationship isn't a quirk of Berlin's layout — it's a structural property of shortest-path routing that survives a change of continent, of century, and of urban planning philosophy.
+
+The bottom three places, by contrast, **do** reshuffle: closeness drops from 0.36 to 0.16 and segment length from 0.27 to 0.06 (not significant), while degree stays flat at ~0.20. That is what you'd expect if those metrics never had a mechanism behind them in the first place — they track incidental features of a particular street layout, so they move when the layout does.
 
 <details>
-<summary><b>The one metric that <i>did</i> behave differently</b></summary>
+<summary><b>A closer look at the metric that swings the most</b></summary>
 
 <br>
 
@@ -260,7 +264,7 @@ A plausible reading: in the near-uniform grid around the Obelisco, street length
 
 <br>
 
-## 📈 Does a whole city have a fundamental diagram?
+## Does a whole city have a fundamental diagram?
 
 A single road has a critical density: below it, more cars means more flow; above it, more cars means less. Does a whole *network* do the same thing?
 
@@ -276,7 +280,7 @@ Past the peak, the single-street mechanism scales up: the highest-betweenness se
 
 <br>
 
-## 📁 What's in here
+## What's in here
 
 ```
 gridlock/
@@ -294,11 +298,11 @@ gridlock/
     └── figures/                         # all 13 figures as PNGs
 ```
 
-📄 **[Read the full technical report (PDF) →](report/gridlock-technical-report.pdf)**
+**[Read the full technical report (PDF) →](report/gridlock-technical-report.pdf)**
 
 <br>
 
-## ⚙️ Parameters
+## Parameters
 
 Everything lives in [`gridlock/config.py`](gridlock/config.py).
 
@@ -318,7 +322,7 @@ Change `DEFAULT_MAX_SPEED` or `DEFAULT_PROB_SLOW` and **the congestion threshold
 
 <br>
 
-## ⚠️ What this model does *not* do
+## What this model does *not* do
 
 Stated plainly, because a model you can't criticise isn't a model:
 
@@ -331,7 +335,7 @@ Stated plainly, because a model you can't criticise isn't a model:
 
 <br>
 
-## 📚 References
+## References
 
 - Boeing, G. (2017). [OSMnx: New methods for acquiring, constructing, analyzing, and visualizing complex street networks](https://doi.org/10.1016/j.compenvurbsys.2017.05.004). *Computers, Environment and Urban Systems*, 65, 126–139.
 - Brandes, U. (2001). [A faster algorithm for betweenness centrality](https://doi.org/10.1080/0022250X.2001.9990249). *Journal of Mathematical Sociology*, 25(2), 163–177.
@@ -340,7 +344,7 @@ Stated plainly, because a model you can't criticise isn't a model:
 
 <br>
 
-## 📄 License
+## License
 
 [MIT](LICENSE) — road network data © OpenStreetMap contributors, available under the [ODbL](https://www.openstreetmap.org/copyright).
 
