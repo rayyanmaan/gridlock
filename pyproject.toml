@@ -38,8 +38,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/rayyanmaan/gridlock"
-Repository = "https://github.com/rayyanmaan/gridlock"
+Homepage = "https://github.com/rayyanmaan/traffic-bottleneck-prediction"
+Repository = "https://github.com/rayyanmaan/traffic-bottleneck-prediction"
 
 [tool.setuptools]
 packages = ["gridlock"]

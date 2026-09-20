@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚦 Gridlock
+# 🚦 Traffic Bottleneck Prediction
 
 ### Predicting urban traffic bottlenecks from road-network structure alone
 
@@ -58,12 +58,12 @@ Note what is and isn't stable across the two cities. **The top two places are id
 ## Quickstart
 
 ```bash
-git clone https://github.com/rayyanmaan/gridlock.git
-cd gridlock
+git clone https://github.com/rayyanmaan/traffic-bottleneck-prediction.git
+cd traffic-bottleneck-prediction
 pip install -r requirements.txt
 ```
 
-Run the whole study on a city from the command line:
+Run the whole study on a city from the command line (the package itself is named `gridlock`):
 
 ```bash
 python -m gridlock --city berlin
@@ -283,7 +283,7 @@ Past the peak, the single-street mechanism scales up: the highest-betweenness se
 ## What's in here
 
 ```
-gridlock/
+traffic-bottleneck-prediction/
 ├── gridlock/                            # the library
 │   ├── config.py                        # every tunable parameter, in one place
 │   ├── network.py                       # RoadNetwork — OSM download, travel times, cell counts
