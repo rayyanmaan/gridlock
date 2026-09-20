@@ -1,0 +1,10 @@
+# Gridlock runtime dependencies.
+# Install with:  pip install -r requirements.txt
+
+osmnx>=1.9          # OpenStreetMap street-network download and plotting
+networkx>=3.0       # graph representation, shortest paths, centrality
+numpy>=1.24         # cellular-automaton state arrays
+pandas>=2.0         # per-segment metric tables
+scipy>=1.10         # Spearman correlations, standard errors
+matplotlib>=3.7     # all figures
+seaborn>=0.12       # correlation heatmaps
